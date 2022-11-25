@@ -1,6 +1,10 @@
 package com.br.springlogin.models;
 
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,10 +14,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
+import com.br.springlogin.config.Uteis;
+
 @Entity
 @Table(name = "TB_USUARIO")
 public class Usuario implements Serializable {
 	
+
 	/**
 	 * 
 	 */
@@ -36,6 +43,14 @@ public class Usuario implements Serializable {
 	@Size(min = 4, message = "Erro: Nome deve conter no mínimo 4 caracteres")
 	private String nome;
 	
+
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
 	public String getLogin() {
 		return login;
 	}
@@ -45,9 +60,11 @@ public class Usuario implements Serializable {
 	public String getSenha() {
 		return senha;
 	}
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
+	public void setSenha(String senha) {            
+		this.senha = Uteis.criptografa(senha);
+	}		
+		
+		
 	public String getNome() {
 		return nome;
 	}
